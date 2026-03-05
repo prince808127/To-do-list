@@ -1,0 +1,143 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #1f1c2c, #928dab);
+    color: #333;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 60px 20px;
+    color: white;
+}
+
+.header-content {
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.profile-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 5px solid white;
+    object-fit: cover;
+    margin-bottom: 20px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Image Hover Effect */
+.profile-img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(255,255,255,0.8);
+}
+
+/* Sections */
+section {
+    background: white;
+    margin: 30px auto;
+    padding: 40px;
+    max-width: 900px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+/* Section Hover */
+section:hover {
+    transform: translateY(-5px);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #444;
+}
+
+/* Skills */
+#skills ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+#skills li {
+    background: #1f1c2c;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Skills Hover */
+#skills li:hover {
+    background: #928dab;
+    transform: scale(1.1);
+}
+
+/* Experience Card */
+.card {
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px;
+    background: #f4f4f4;
+    transition: all 0.3s ease;
+}
+
+/* Card Hover */
+.card:hover {
+    background: #e0e0ff;
+    transform: scale(1.05);
+}
+
+/* Contact */
+#contact p {
+    text-align: center;
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #1f1c2c;
+    color: white;
+    margin-top: 30px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    section {
+        margin: 20px;
+        padding: 25px;
+    }
+
+    .profile-img {
+        width: 120px;
+        height: 120px;
+    }
+}

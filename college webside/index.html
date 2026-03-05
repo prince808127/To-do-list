@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HITM BKT - Lucknow</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --gold: #c9962c;
+    --gold-light: #f0c060;
+    --cream: #f8f4ec;
+    --white: #ffffff;
+    --gray: #6b7280;
+    --light: #f1f5f9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--navy); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(10,22,40,0.96); backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 70px;
+    border-bottom: 1px solid rgba(201,150,44,0.3);
+  }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-weight: 900; font-size: 14px;
+    color: var(--navy); box-shadow: 0 0 18px rgba(201,150,44,0.4);
+  }
+  .logo-text h1 { font-size: 16px; font-weight: 600; letter-spacing: 2px; color: white; }
+  .logo-text p { font-size: 10px; color: var(--gold-light); letter-spacing: 1px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.8); text-decoration: none; font-size: 13px;
+    font-weight: 500; letter-spacing: 0.5px; transition: color 0.3s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--gold); transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--navy) !important; padding: 8px 20px; border-radius: 4px; font-weight: 600 !important;
+  }
+
+  /* HERO SLIDER */
+  .hero {
+    min-height: 100vh; position: relative; overflow: hidden;
+    display: flex; align-items: center; padding: 5% 5% 5% 8%;
+  }
+  .hero-slider { position: absolute; inset: 0; z-index: 0; }
+  .slide {
+    position: absolute; inset: 0; opacity: 0;
+    transition: opacity 1.4s ease; background-size: cover; background-position: center;
+  }
+  .slide.active { opacity: 1; }
+  .slide::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(110deg, rgba(10,22,40,0.92) 45%, rgba(10,22,40,0.5) 100%);
+  }
+  /* Fallback gradient colours when no image file is present */
+  .s1 { background-color: #0d2245; }
+  .s2 { background-color: #102a50; }
+  .s3 { background-color: #0c1e3d; }
+  .s4 { background-color: #0a1c3a; }
+
+  .slider-dots {
+    position: absolute; bottom: 36px; left: 8%; display: flex; gap: 10px; z-index: 10;
+  }
+  .slider-dot {
+    width: 28px; height: 4px; border-radius: 2px;
+    background: rgba(255,255,255,0.3); cursor: pointer; transition: background 0.3s, width 0.3s;
+  }
+  .slider-dot.active { background: var(--gold); width: 48px; }
+  .slider-arrows { position: absolute; bottom: 26px; right: 8%; display: flex; gap: 12px; z-index: 10; }
+  .slider-arrow {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: white; font-size: 18px; transition: border-color 0.3s, background 0.3s;
+  }
+  .slider-arrow:hover { border-color: var(--gold); background: rgba(201,150,44,0.15); }
+  .slide-counter {
+    position: absolute; top: 90px; right: 8%; z-index: 10;
+    color: rgba(255,255,255,0.4); font-size: 13px; letter-spacing: 2px;
+  }
+  .slide-counter span { color: var(--gold-light); font-weight: 600; }
+
+  .hero-content { position: relative; z-index: 2; max-width: 700px; }
+  .hero-tag {
+    display: inline-block; background: rgba(201,150,44,0.15); border: 1px solid rgba(201,150,44,0.4);
+    color: var(--gold-light); font-size: 11px; font-weight: 600; letter-spacing: 2px;
+    padding: 6px 16px; border-radius: 20px; margin-bottom: 28px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero h2 {
+    font-family: 'Playfair Display', serif; font-size: clamp(36px, 5vw, 68px); font-weight: 900;
+    color: white; line-height: 1.1; margin-bottom: 12px; animation: fadeUp 0.8s 0.1s ease both;
+  }
+  .hero h2 span { color: var(--gold-light); }
+  .hero-sub {
+    font-size: 14px; font-weight: 500; letter-spacing: 3px; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 20px; animation: fadeUp 0.8s 0.2s ease both;
+  }
+  .hero p {
+    font-size: 17px; color: rgba(255,255,255,0.65); line-height: 1.8;
+    max-width: 520px; margin-bottom: 40px; animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; animation: fadeUp 0.8s 0.4s ease both; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--navy); padding: 14px 32px; font-weight: 700; font-size: 14px;
+    border-radius: 4px; text-decoration: none; border: none; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(201,150,44,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,150,44,0.4); }
+  .btn-outline {
+    border: 1px solid rgba(255,255,255,0.3); color: white; padding: 14px 32px;
+    font-size: 14px; font-weight: 500; border-radius: 4px; text-decoration: none;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .btn-outline:hover { border-color: var(--gold); background: rgba(201,150,44,0.08); }
+
+  /* STATS */
+  .stats-bar {
+    background: white; padding: 40px 8%;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-bottom: 3px solid var(--gold); box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+  }
+  .stat-item { text-align: center; padding: 0 20px; border-right: 1px solid rgba(0,0,0,0.08); }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 900; color: var(--gold); line-height: 1; }
+  .stat-label { font-size: 13px; color: var(--gray); margin-top: 6px; letter-spacing: 0.5px; }
+
+  /* SECTIONS */
+  section { padding: 90px 8%; }
+  .section-tag { font-size: 11px; font-weight: 700; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 48px); font-weight: 800; line-height: 1.2; margin-bottom: 20px; color: var(--navy); }
+  .section-desc { font-size: 16px; color: var(--gray); line-height: 1.8; max-width: 580px; }
+
+  /* ABOUT */
+  .about { background: var(--cream); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 60px; }
+  .about-visual { position: relative; }
+  .about-img-box {
+    background: linear-gradient(135deg, var(--navy), #1a2f52);
+    border-radius: 8px; height: 380px;
+    display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
+  }
+  .about-img-box img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+  .about-img-inner { text-align: center; color: white; position: relative; z-index: 2; }
+  .about-img-inner .big-year { font-family: 'Playfair Display', serif; font-size: 100px; font-weight: 900; color: rgba(201,150,44,0.2); line-height: 1; }
+  .about-img-inner p { font-size: 14px; color: var(--gold-light); letter-spacing: 2px; }
+  .about-badge {
+    position: absolute; bottom: -20px; right: -20px;
+    background: var(--gold); width: 100px; height: 100px; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; color: var(--navy); font-weight: 900;
+    box-shadow: 0 8px 30px rgba(201,150,44,0.4);
+  }
+  .about-badge .yrs { font-size: 20px; line-height: 1; }
+  .about-badge .yr-label { font-size: 9px; font-family: 'DM Sans', sans-serif; letter-spacing: 0.5px; text-align: center; }
+  .about-text ul { list-style: none; margin-top: 28px; }
+  .about-text ul li {
+    padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.07);
+    font-size: 15px; display: flex; align-items: center; gap: 12px; color: #374151;
+  }
+  .about-text ul li::before { content: '✦'; color: var(--gold); font-size: 10px; flex-shrink: 0; }
+
+  /* GALLERY */
+  .gallery { background: var(--light); }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 260px 200px;
+    gap: 14px; margin-top: 48px;
+  }
+  .gallery-item {
+    border-radius: 10px; overflow: hidden; position: relative; cursor: pointer;
+    background: linear-gradient(135deg, #0d2040, #1b3560);
+  }
+  /* Large featured tile */
+  .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+  /* Wide tile */
+  .gallery-item:nth-child(5) { grid-column: span 2; }
+
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.5s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.07); }
+
+  /* Placeholder shown when no image */
+  .gallery-ph {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px; color: rgba(255,255,255,0.35); font-size: 11px; letter-spacing: 1.5px;
+    font-weight: 600; text-transform: uppercase;
+    transition: opacity 0.3s;
+  }
+  .gallery-ph .ph-icon { font-size: 38px; opacity: 0.4; }
+  .gallery-item img ~ .gallery-ph { opacity: 0; } /* Hide placeholder if img loads */
+
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,22,40,0.82) 0%, transparent 55%);
+    display: flex; align-items: flex-end; padding: 18px 20px;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-overlay span {
+    color: white; font-size: 13px; font-weight: 600;
+    border-bottom: 1px solid var(--gold); padding-bottom: 3px;
+  }
+  .gallery-note {
+    text-align: center; margin-top: 22px;
+  }
+  .gallery-note p {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,150,44,0.1); border: 1px dashed rgba(201,150,44,0.45);
+    color: var(--gold); font-size: 12px; font-weight: 600;
+    padding: 9px 22px; border-radius: 20px; letter-spacing: 0.5px;
+  }
+
+  /* PROGRAMS */
+  .programs { background: var(--navy); }
+  .programs .section-title { color: white; }
+  .programs .section-desc { color: rgba(255,255,255,0.5); }
+  .programs .section-tag { color: var(--gold-light); }
+  .prog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px; }
+  .prog-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px; padding: 36px 28px;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s; cursor: pointer;
+  }
+  .prog-card:hover { background: rgba(201,150,44,0.08); border-color: rgba(201,150,44,0.4); transform: translateY(-4px); }
+  .prog-icon {
+    width: 50px; height: 50px; border-radius: 8px; background: rgba(201,150,44,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 20px; border: 1px solid rgba(201,150,44,0.3);
+  }
+  .prog-card h3 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: white; margin-bottom: 10px; }
+  .prog-card p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.7; }
+  .prog-card .prog-dur {
+    display: inline-block; margin-top: 18px; font-size: 12px; font-weight: 600; letter-spacing: 1px;
+    color: var(--gold); border: 1px solid rgba(201,150,44,0.4); padding: 4px 12px; border-radius: 20px;
+  }
+
+  /* WHY HITM */
+  .why { background: white; }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 60px; }
+  .feature-list { display: flex; flex-direction: column; gap: 20px; }
+  .feature-item {
+    display: flex; gap: 20px; align-items: flex-start; padding: 20px; border-radius: 8px;
+    transition: background 0.3s; border: 1px solid transparent;
+  }
+  .feature-item:hover { background: var(--cream); border-color: rgba(201,150,44,0.2); }
+  .feat-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--navy);
+  }
+  .feature-item h4 { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+  .feature-item p { font-size: 14px; color: var(--gray); line-height: 1.6; }
+  .why-visual {
+    background: linear-gradient(135deg, var(--navy), #1a2f52);
+    border-radius: 12px; padding: 48px 40px; position: relative; overflow: hidden;
+  }
+  .why-visual::before {
+    content: ''; position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px; border-radius: 50%; background: rgba(201,150,44,0.08);
+  }
+  .why-visual h3 { font-family: 'Playfair Display', serif; font-size: 30px; color: white; font-weight: 800; margin-bottom: 30px; }
+  .why-visual h3 span { color: var(--gold-light); }
+  .metric { margin-bottom: 24px; }
+  .metric-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .metric-label { font-size: 13px; color: rgba(255,255,255,0.6); }
+  .metric-val { font-size: 13px; font-weight: 700; color: var(--gold-light); }
+  .metric-bar { height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
+  .metric-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 3px; animation: barFill 1.5s ease both; }
+  @keyframes barFill { from { width: 0; } }
+
+  /* ADMISSIONS */
+  .admissions { background: var(--cream); display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding: 0; }
+  .adm-left { background: var(--navy); padding: 90px 60px; color: white; }
+  .adm-left .section-tag { color: var(--gold-light); }
+  .adm-left .section-title { color: white; }
+  .adm-steps { margin-top: 40px; display: flex; flex-direction: column; gap: 20px; }
+  .adm-step { display: flex; gap: 20px; align-items: flex-start; }
+  .step-num {
+    width: 36px; height: 36px; flex-shrink: 0; border: 1px solid var(--gold); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 14px; color: var(--gold);
+  }
+  .adm-step h4 { font-size: 15px; font-weight: 600; color: white; margin-bottom: 4px; }
+  .adm-step p { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+  .adm-right { padding: 90px 60px; background: white; }
+  .adm-right .section-tag { color: var(--gold); }
+  .form-group { margin-bottom: 20px; }
+  .form-group label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; color: var(--navy); margin-bottom: 6px; }
+  .form-group input, .form-group select {
+    width: 100%; padding: 12px 16px; border: 1px solid rgba(0,0,0,0.12); border-radius: 6px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--navy);
+    background: var(--cream); outline: none; transition: border-color 0.3s;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--gold); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* FOOTER */
+  footer { background: #060e1c; color: rgba(255,255,255,0.6); padding: 70px 8% 30px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 50px; }
+  .footer-brand p { margin-top: 16px; font-size: 14px; line-height: 1.8; max-width: 280px; }
+  footer h4 { color: white; font-size: 14px; font-weight: 600; letter-spacing: 1px; margin-bottom: 20px; }
+  footer ul { list-style: none; }
+  footer ul li { margin-bottom: 10px; }
+  footer ul li a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; transition: color 0.3s; }
+  footer ul li a:hover { color: var(--gold-light); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.07); padding-top: 28px;
+    display: flex; justify-content: space-between; align-items: center; font-size: 13px;
+  }
+  .footer-bottom span { color: var(--gold); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .about-grid, .why-grid, .prog-grid { grid-template-columns: 1fr; }
+    .admissions { grid-template-columns: 1fr; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .adm-left, .adm-right { padding: 60px 30px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .gallery-item { height: 180px; }
+    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; height: 240px; }
+    .gallery-item:nth-child(5) { grid-column: span 2; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-badge">HITM</div>
+    <div class="logo-text">
+      <h1>HITM BKT</h1>
+      <p>LUCKNOW, UTTAR PRADESH</p>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#why">Why HITM</a></li>
+    <li><a href="#admissions">Admissions</a></li>
+    <li><a href="#admissions" class="nav-cta">Apply Now</a></li>
+  </ul>
+</nav>
+
+<!-- ════════ HERO WITH SLIDER ════════ -->
+<section class="hero" id="home">
+
+  <!--
+    SLIDER IMAGES — Replace the background-image URLs with your actual college photos.
+    You can use relative paths like: url('img/campus1.jpg')
+    or absolute paths / hosted URLs.
+  -->
+  <div class="hero-slider" id="heroSlider">
+    <div class="slide s1 active" style="background-image:url('img/hero-1.jpg');"></div>
+    <div class="slide s2"        style="background-image:url('img/hero-2.jpg');"></div>
+    <div class="slide s3"        style="background-image:url('img/hero-3.jpg');"></div>
+    <div class="slide s4"        style="background-image:url('img/hero-4.jpg');"></div>
+  </div>
+
+  <!-- Counter top-right -->
+  <div class="slide-counter"><span id="curSlide">01</span> / 04</div>
+
+  <!-- Dots -->
+  <div class="slider-dots">
+    <div class="slider-dot active" onclick="goSlide(0)"></div>
+    <div class="slider-dot" onclick="goSlide(1)"></div>
+    <div class="slider-dot" onclick="goSlide(2)"></div>
+    <div class="slider-dot" onclick="goSlide(3)"></div>
+  </div>
+
+  <!-- Prev / Next arrows -->
+  <div class="slider-arrows">
+    <div class="slider-arrow" onclick="prevSlide()">&#8592;</div>
+    <div class="slider-arrow" onclick="nextSlide()">&#8594;</div>
+  </div>
+
+  <!-- Text content -->
+  <div class="hero-content">
+    <div class="hero-tag">&#10022; Lucknow's Premier Technical Institution</div>
+    <div class="hero-sub">Bakshi Ka Talab, Lucknow</div>
+    <h2>Shaping <span>Future</span><br>Leaders in Technology</h2>
+    <p>Hi-Tech Institute of Technology &amp; Management empowers students with world-class education, cutting-edge research, and industry-aligned programs designed for tomorrow's challenges.</p>
+    <div class="hero-btns">
+      <a href="#admissions" class="btn-primary">Apply for Admission</a>
+      <a href="#programs" class="btn-outline">Explore Programs</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">2000+</div><div class="stat-label">Students Enrolled</div></div>
+  <div class="stat-item"><div class="stat-num">150+</div><div class="stat-label">Expert Faculty</div></div>
+  <div class="stat-item"><div class="stat-num">95%</div><div class="stat-label">Placement Rate</div></div>
+  <div class="stat-item"><div class="stat-num">200+</div><div class="stat-label">Recruiting Partners</div></div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-tag">About Us</div>
+  <div class="section-title">Excellence in Education<br>Since Establishment</div>
+  <div class="section-desc">HITM BKT, Lucknow is dedicated to delivering quality technical education through innovation, practical learning and strong industry partnerships.</div>
+  <div class="about-grid">
+    <div class="about-visual">
+      <div class="about-img-box">
+        <!-- ► Replace with your college building image -->
+        <img src="img/about-building.jpg" alt="HITM Campus Building" onerror="this.style.display='none'">
+        <div class="about-img-inner">
+          <div class="big-year">HITM</div>
+          <p>BKT &middot; LUCKNOW</p>
+        </div>
+      </div>
+      <div class="about-badge">
+        <div class="yrs">AICTE</div>
+        <div class="yr-label">APPROVED</div>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="section-tag">Our Vision</div>
+      <div class="section-title" style="font-size:30px;">Building Technically<br>Proficient Graduates</div>
+      <p class="section-desc">Located in Bakshi Ka Talab, Lucknow, HITM provides a holistic learning environment combining academic rigor, practical skills, and ethical values to prepare students for global careers.</p>
+      <ul>
+        <li>State-of-the-art computer labs &amp; workshops</li>
+        <li>AICTE approved programs under AKTU</li>
+        <li>Active Training &amp; Placement Cell</li>
+        <li>Strong alumni network across top companies</li>
+        <li>Regular industry expert guest lectures &amp; seminars</li>
+        <li>Sports facilities and extra-curricular activities</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ GALLERY ════════ -->
+<section class="gallery" id="gallery">
+  <div class="section-tag">Campus Life</div>
+  <div class="section-title">Explore Our Campus</div>
+  <div class="section-desc">A glimpse into the vibrant academic environment, modern facilities, and student life at HITM BKT Lucknow.</div>
+
+  <!--
+    GALLERY IMAGES — Replace each src with your actual photo path.
+    Suggested filenames are listed below. Place images in an "img/" folder
+    next to this HTML file, or update paths as needed.
+  -->
+  <div class="gallery-grid">
+
+    <!-- 1 → Large feature (2 cols × 2 rows) -->
+    <div class="gallery-item">
+      <img src="img/gallery-campus.jpg" alt="Campus" onerror="this.style.display='none'">
+      <div class="gallery-ph"><div class="ph-icon">🏛️</div><div>MAIN CAMPUS</div></div>
+      <div class="gallery-overlay"><span>Main Campus Building</span></div>
+    </div>
+
+    <!-- 2 → Computer Lab -->
+    <div class="gallery-item">
+      <img src="img/gallery-lab.jpg" alt="Computer Lab" onerror="this.style.display='none'">
+      <div class="gallery-ph"><div class="ph-icon">💻</div><div>COMPUTER LAB</div></div>
+      <div class="gallery-overlay"><span>Computer Lab</span></div>
+    </div>
+
+    <!-- 3 → Library -->
+    <div class="gallery-item">
+      <img src="img/gallery-library.jpg" alt="Library" onerror="this.style.display='none'">
+      <div class="gallery-ph"><div class="ph-icon">📚</div><div>LIBRARY</div></div>
+      <div class="gallery-overlay"><span>Central Library</span></div>
+    </div>
+
+    <!-- 4 → Workshop / Lab -->
+    <div class="gallery-item">
+      <img src="img/gallery-workshop.jpg" alt="Workshop" onerror="this.style.display='none'">
+      <div class="gallery-ph"><div class="ph-icon">&#9881;&#65039;</div><div>WORKSHOP</div></div>
+      <div class="gallery-overlay"><span>Engineering Workshop</span></div>
+    </div>
+
+    <!-- 5 → Events / Convocation (wide – 2 cols) -->
+    <div class="gallery-item">
+      <img src="img/gallery-events.jpg" alt="Events" onerror="this.style.display='none'">
+      <div class="gallery-ph"><div class="ph-icon">🎓</div><div>EVENTS &amp; CONVOCATION</div></div>
+      <div class="gallery-overlay"><span>Annual Events &amp; Convocation</span></div>
+    </div>
+
+    <!-- 6 → Sports -->
+    <div class="gallery-item">
+      <img src="img/gallery-sports.jpg" alt="Sports" onerror="this.style.display='none'">
+      <div class="gallery-ph"><div class="ph-icon">🏆</div><div>SPORTS GROUND</div></div>
+      <div class="gallery-overlay"><span>Sports &amp; Recreation</span></div>
+    </div>
+
+  </div>
+
+  <div class="gallery-note">
+    <p>&#128247; Add your college photos in an <strong>img/</strong> folder using the filenames: gallery-campus.jpg, gallery-lab.jpg, gallery-library.jpg, gallery-workshop.jpg, gallery-events.jpg, gallery-sports.jpg</p>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="programs" id="programs">
+  <div class="section-tag">Academic Programs</div>
+  <div class="section-title">Programs We Offer</div>
+  <div class="section-desc">Undergraduate and postgraduate programs affiliated with Dr. APJ Abdul Kalam Technical University (AKTU), designed to meet industry standards.</div>
+  <div class="prog-grid">
+    <div class="prog-card">
+      <div class="prog-icon">💻</div>
+      <h3>B.Tech &mdash; Computer Science</h3>
+      <p>Core programming, data structures, algorithms, AI/ML, cloud computing and software engineering for modern tech roles.</p>
+      <span class="prog-dur">4 Years &middot; 240 Credits</span>
+    </div>
+    <div class="prog-card">
+      <div class="prog-icon">&#9881;&#65039;</div>
+      <h3>B.Tech &mdash; Mechanical Engineering</h3>
+      <p>Thermodynamics, manufacturing processes, CAD/CAM, and design engineering with hands-on workshop training.</p>
+      <span class="prog-dur">4 Years &middot; 240 Credits</span>
+    </div>
+    <div class="prog-card">
+      <div class="prog-icon">&#9889;</div>
+      <h3>B.Tech &mdash; Electrical Engineering</h3>
+      <p>Power systems, control engineering, electronics, and renewable energy technologies with practical lab exposure.</p>
+      <span class="prog-dur">4 Years &middot; 240 Credits</span>
+    </div>
+    <div class="prog-card">
+      <div class="prog-icon">&#127959;&#65039;</div>
+      <h3>B.Tech &mdash; Civil Engineering</h3>
+      <p>Structural analysis, construction management, surveying, and sustainable infrastructure design.</p>
+      <span class="prog-dur">4 Years &middot; 240 Credits</span>
+    </div>
+    <div class="prog-card">
+      <div class="prog-icon">&#128225;</div>
+      <h3>B.Tech &mdash; Electronics &amp; Comm.</h3>
+      <p>Signal processing, VLSI design, communication systems, and embedded technologies for core ECE roles.</p>
+      <span class="prog-dur">4 Years &middot; 240 Credits</span>
+    </div>
+    <div class="prog-card">
+      <div class="prog-icon">&#127891;</div>
+      <h3>MBA &mdash; Management Studies</h3>
+      <p>Business strategy, marketing, finance, HR and entrepreneurship for future business leaders.</p>
+      <span class="prog-dur">2 Years &middot; 120 Credits</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHY HITM -->
+<section class="why" id="why">
+  <div class="section-tag">Why Choose Us</div>
+  <div class="section-title">The HITM Advantage</div>
+  <div class="why-grid">
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="feat-icon">&#127963;&#65039;</div>
+        <div>
+          <h4>AKTU Affiliated &amp; AICTE Approved</h4>
+          <p>Recognized degrees with full government approval, ensuring your qualification is valued nationwide.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feat-icon">&#129309;</div>
+        <div>
+          <h4>Strong Industry Connections</h4>
+          <p>Regular MoUs with leading IT and manufacturing companies ensuring internships and placements.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feat-icon">&#128302;</div>
+        <div>
+          <h4>Modern Labs &amp; Infrastructure</h4>
+          <p>Well-equipped computer labs, mechanical workshops, electronics labs and a well-stocked library.</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feat-icon">&#128104;&#8205;&#127979;</div>
+        <div>
+          <h4>Experienced Faculty</h4>
+          <p>Qualified professors with industry backgrounds delivering quality education and mentorship.</p>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual">
+      <h3>Our <span>Placement</span><br>Track Record</h3>
+      <div class="metric">
+        <div class="metric-header"><span class="metric-label">Overall Placement Rate</span><span class="metric-val">95%</span></div>
+        <div class="metric-bar"><div class="metric-fill" style="width:95%"></div></div>
+      </div>
+      <div class="metric">
+        <div class="metric-header"><span class="metric-label">CSE Placement</span><span class="metric-val">98%</span></div>
+        <div class="metric-bar"><div class="metric-fill" style="width:98%"></div></div>
+      </div>
+      <div class="metric">
+        <div class="metric-header"><span class="metric-label">Core Branch Placement</span><span class="metric-val">88%</span></div>
+        <div class="metric-bar"><div class="metric-fill" style="width:88%"></div></div>
+      </div>
+      <div class="metric">
+        <div class="metric-header"><span class="metric-label">MBA Placement</span><span class="metric-val">90%</span></div>
+        <div class="metric-bar"><div class="metric-fill" style="width:90%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADMISSIONS -->
+<div class="admissions" id="admissions">
+  <div class="adm-left">
+    <div class="section-tag">Admissions 2025&ndash;26</div>
+    <div class="section-title" style="color:white;">Your Journey<br>Starts Here</div>
+    <p style="color:rgba(255,255,255,0.5);font-size:15px;line-height:1.8;margin-top:12px;">Applications are open for the academic year 2025&ndash;26. Join HITM BKT and take the first step towards a successful career.</p>
+    <div class="adm-steps">
+      <div class="adm-step"><div class="step-num">1</div><div><h4>Fill Online Application</h4><p>Complete the inquiry form with your personal and academic details.</p></div></div>
+      <div class="adm-step"><div class="step-num">2</div><div><h4>Entrance Counselling</h4><p>Attend AKTU counselling or contact us for direct admission eligibility.</p></div></div>
+      <div class="adm-step"><div class="step-num">3</div><div><h4>Document Verification</h4><p>Submit mark sheets, ID proof and category certificates if applicable.</p></div></div>
+      <div class="adm-step"><div class="step-num">4</div><div><h4>Fee Payment &amp; Enrollment</h4><p>Complete fee payment to confirm your seat and begin your journey.</p></div></div>
+    </div>
+  </div>
+  <div class="adm-right">
+    <div class="section-tag">Quick Inquiry</div>
+    <div class="section-title" style="font-size:28px;">Get In Touch</div>
+    <p style="color:var(--gray);font-size:14px;margin-bottom:32px;">Fill in your details and our admissions team will contact you shortly.</p>
+    <div class="form-row">
+      <div class="form-group"><label>FIRST NAME</label><input type="text" placeholder="Rahul"></div>
+      <div class="form-group"><label>LAST NAME</label><input type="text" placeholder="Sharma"></div>
+    </div>
+    <div class="form-group"><label>EMAIL ADDRESS</label><input type="email" placeholder="rahul@email.com"></div>
+    <div class="form-group"><label>MOBILE NUMBER</label><input type="tel" placeholder="+91 98765 43210"></div>
+    <div class="form-group">
+      <label>PROGRAM OF INTEREST</label>
+      <select>
+        <option>Select Program</option>
+        <option>B.Tech &ndash; Computer Science</option>
+        <option>B.Tech &ndash; Mechanical Engineering</option>
+        <option>B.Tech &ndash; Electrical Engineering</option>
+        <option>B.Tech &ndash; Civil Engineering</option>
+        <option>B.Tech &ndash; Electronics &amp; Communication</option>
+        <option>MBA</option>
+      </select>
+    </div>
+    <button class="btn-primary" style="width:100%;margin-top:8px;">Submit Inquiry &#8594;</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">
+        <div class="logo-badge">HITM</div>
+        <div class="logo-text" style="margin-left:12px">
+          <h1 style="color:white;font-size:16px;letter-spacing:2px">HITM BKT</h1>
+          <p style="color:var(--gold);font-size:10px;letter-spacing:1px">LUCKNOW, UTTAR PRADESH</p>
+        </div>
+      </div>
+      <p>Hi-Tech Institute of Technology &amp; Management, Bakshi Ka Talab, Lucknow &mdash; shaping the next generation of engineers and managers.</p>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#about">About HITM</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#why">Placements</a></li>
+        <li><a href="#admissions">Admissions</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Programs</h4>
+      <ul>
+        <li><a href="#">B.Tech CSE</a></li>
+        <li><a href="#">B.Tech ME</a></li>
+        <li><a href="#">B.Tech EE</a></li>
+        <li><a href="#">B.Tech CE</a></li>
+        <li><a href="#">MBA</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact Us</h4>
+      <ul>
+        <li><a href="#">&#128205; BKT, Lucknow, UP</a></li>
+        <li><a href="tel:+910522000000">&#128222; +91 0522 000000</a></li>
+        <li><a href="mailto:info@hitmBKT.edu.in">&#9993;&#65039; info@hitmBKT.edu.in</a></li>
+        <li><a href="#">&#127760; www.hitmBKT.edu.in</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 <span>HITM BKT Lucknow</span>. All Rights Reserved.</p>
+    <p>Affiliated to <span>AKTU</span> &middot; Approved by <span>AICTE</span></p>
+  </div>
+</footer>
+
+<!-- ════════ SLIDER SCRIPT ════════ -->
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const dots   = document.querySelectorAll('.slider-dot');
+  const counter = document.getElementById('curSlide');
+  let timer;
+
+  function goSlide(n) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = ((n % slides.length) + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+    counter.textContent = String(current + 1).padStart(2, '0');
+    resetTimer();
+  }
+
+  function nextSlide() { goSlide(current + 1); }
+  function prevSlide()  { goSlide(current - 1); }
+
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(nextSlide, 5000);
+  }
+
+  resetTimer();
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft')  prevSlide();
+  });
+</script>
+</body>
+</html>
